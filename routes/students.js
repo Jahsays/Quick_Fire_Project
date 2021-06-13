@@ -2,14 +2,6 @@ const express = require('express')
 const router = express.Router()
 const Student = require('../models/student')
 
-router.get('/', async(req, res) => {
-    try{
-          const students = await Student.find() 
-          res.json(students)
-    }catch(err){
-        res.send ('Error ' + err)
-    }
-})
 
 // create a post request
 router.post('/', async(req, res) => {
@@ -27,7 +19,7 @@ router.post('/', async(req, res) => {
     }
 })
 
-// create a patch request to edit a single data point
+// create a patch request to edit any single or more data points
 router.patch('/:id', async(req, res) => {
     try{
           const student = await Student.findById(req.params.id) 
