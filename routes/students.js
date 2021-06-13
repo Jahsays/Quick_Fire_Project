@@ -2,6 +2,14 @@ const express = require('express')
 const router = express.Router()
 const Student = require('../models/student')
 
+router.get('/', async(req, res) => {
+    try{
+          const students = await Student.find() 
+          res.json(students)
+    }catch(err){
+        res.send ('Error ' + err)
+    }
+})
 
 // create a post request
 router.post('/', async(req, res) => {
@@ -23,7 +31,22 @@ router.post('/', async(req, res) => {
 router.patch('/:id', async(req, res) => {
     try{
           const student = await Student.findById(req.params.id) 
-          student.dob = req.body.dob
+          
+         const {firstName, lastName, dob} = req.body
+
+         if(firstName){
+            student.firstName = firstName;
+         } 
+         if(lastName){
+            student.lastName = lastName;
+         } 
+         if(dob){
+            student.dob = dob;
+         } 
+         if(req.body.class){
+            student.class = req.body.class;
+         } 
+        
           const a1 = student.save()
           res.json(student)
     }catch(err){
